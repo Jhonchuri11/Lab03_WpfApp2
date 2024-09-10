@@ -26,7 +26,41 @@ namespace WpfApp4
         private void Listar_Click(object sender, RoutedEventArgs e)
         {
 
+            string connectionString = "Server=DEV\\SQLEXPRESS; Database=Lab03DB; Integrated Security=True";
+
+
+            string valueSearch = Busqueda.Text;
+
+
+            string query = "SELECT * FROM Students WHERE FirstName like '%" + valueSearch + "%'";
+
             try {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                    DataTable dataTable = new DataTable();
+
+                    connection.Open();
+
+                    adapter.Fill(dataTable);
+
+                    ListClient.ItemsSource = dataTable.DefaultView;
+                }
+            } catch (Exception)
+            {
+                MessageBox.Show("No se pudo conectar");
+
+                throw;
+            }
+
+        }
+
+        private void Listar_Click2(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
 
                 // Para trabajar con conexion a base de datos SQL, tenemos que tener instalalado
                 // System.Data.SqlClient
@@ -45,13 +79,13 @@ namespace WpfApp4
                 // Usamos nuestra consulta sql o conexion <. comnando
                 SqlCommand command = new SqlCommand("Select * from Students", conection);
 
-               // ListClient lisCli = new ListClient();
-                
+                // ListClient lisCli = new ListClient();
+
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
 
                 // Para que funcione nuestra table necesitamos un adaptador
-               DataTable dataTable = new DataTable();
+                DataTable dataTable = new DataTable();
 
 
                 //adapter.Fill(dataTable);
@@ -66,7 +100,8 @@ namespace WpfApp4
 
                 //MessageBox.Show("Conextion establecidad");
 
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 MessageBox.Show("No se pudo conectar");
 

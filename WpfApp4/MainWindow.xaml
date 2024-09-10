@@ -10,6 +10,8 @@
 
         <Button  x:Name="Listar" Content="Listar" Click="Listar_Click"/>
 
+        <TextBox x:Name="Busqueda"/>
+
         <Grid Margin="10">
             <DataGrid x:Name="ListClient" Margin="10, 50, 10, 50">
             </DataGrid>
